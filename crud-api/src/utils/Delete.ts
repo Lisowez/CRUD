@@ -1,20 +1,17 @@
 import { ServerResponse } from 'http';
-import { v4, validate } from 'uuid';
+import { validate } from 'uuid';
 import userModel from '../models/userModel';
 
-const getFunc = (
+const deleteFunc = (
   pathname: string,
   method: string,
   res: ServerResponse,
   users: userModel[],
-): void => {
-  if (pathname === '/api/users' && method === 'GET') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(users));
-  } else if (
+) => {
+  if (
     pathname?.startsWith('/api/users') &&
     pathname.split('/').length === 4 &&
-    method === 'GET'
+    method === 'DELETE'
   ) {
     const id = pathname.split('/')[3];
     if (!validate(id)) {
@@ -29,17 +26,13 @@ const getFunc = (
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end('User with this userId not found');
       } else {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(
-          JSON.stringify(
-            users.filter((x) => {
-              return (x.id = id);
-            })[0],
-          ),
-        );
+        const userIndex = users.findIndex((user) => user.id === id);
+        users.splice(userIndex, 1);
+        res.writeHead(204, { 'Content-Type': 'application/json' });
+        res.end('User with this userId delete');
       }
     }
   }
 };
 
-export default getFunc;
+export default deleteFunc;

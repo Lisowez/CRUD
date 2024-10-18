@@ -11,7 +11,7 @@ const putFunc = (
 ) => {
   if (
     pathname?.startsWith('/api/users') &&
-    pathname.split('/').length &&
+    pathname.split('/').length === 4 &&
     method === 'PUT'
   ) {
     const id = pathname.split('/')[3];
