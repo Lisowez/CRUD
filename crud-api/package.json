@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "webpack",
-    "start:prod": "npm run build && node src/dist/bundle.js",
+    "start:prod": "webpack && ts-node-dev src/index.ts",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."
   },

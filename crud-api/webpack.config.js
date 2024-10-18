@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
   entry: './src/index.ts',
   module: {
     rules: [
@@ -13,7 +14,18 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
-    fallback: { http: require.resolve('stream-http') },
+    fallback: {
+      http: false,
+      https: false,
+      os: false,
+      buffer: false,
+      crypto: false,
+      stream: false,
+      util: false,
+      path: false,
+      fs: false,
+      url: false,
+    },
   },
   output: {
     filename: 'bundle.js',
