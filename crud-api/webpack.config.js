@@ -13,6 +13,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    fallback: { http: require.resolve('stream-http') },
   },
   output: {
     filename: 'bundle.js',
