@@ -1,4 +1,4 @@
-const is404 = (pathname: string, method: string) => {
+const is404 = (pathname: string, method: string): boolean => {
   return (
     (pathname === '/api/users' && method === 'GET') ||
     (pathname?.startsWith('/api/users') &&

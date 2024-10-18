@@ -7,7 +7,7 @@ const deleteFunc = (
   method: string,
   res: ServerResponse,
   users: userModel[],
-) => {
+): void => {
   if (
     pathname?.startsWith('/api/users') &&
     pathname.split('/').length === 4 &&

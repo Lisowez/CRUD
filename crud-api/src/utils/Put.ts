@@ -8,7 +8,7 @@ const putFunc = (
   req: IncomingMessage,
   res: ServerResponse,
   users: userModel[],
-) => {
+): void => {
   if (
     pathname?.startsWith('/api/users') &&
     pathname.split('/').length === 4 &&
@@ -33,10 +33,15 @@ const putFunc = (
           body += chunk.toString();
         });
         req.on('end', () => {
-          const { username, age, hobbies } = JSON.parse(body);
-          users[userIndex] = { ...users[userIndex], username, age, hobbies };
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(users[userIndex]));
+          try {
+            const { username, age, hobbies } = JSON.parse(body);
+            users[userIndex] = { ...users[userIndex], username, age, hobbies };
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(users[userIndex]));
+          } catch (error) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' });
+            res.end('Missing required fields');
+          }
         });
       }
     }
